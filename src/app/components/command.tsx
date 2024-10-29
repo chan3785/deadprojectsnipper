@@ -19,7 +19,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
-const frameworks = [
+const projectid = [
   {
     value: "tenkdao.near",
     label: "tenkdao.near",
@@ -100,7 +100,7 @@ export function ComboboxDemo() {
           className="w-[500px] justify-between"
         >
           {value
-            ? frameworks.find((framework) => framework.value === value)?.label
+            ? projectid.find((projId) => projId.value === value)?.label
             : "Find your project by near account id"}
           <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -111,20 +111,20 @@ export function ComboboxDemo() {
           <CommandList>
             <CommandEmpty>No Project found.</CommandEmpty>
             <CommandGroup>
-              {frameworks.map((framework) => (
+              {projectid.map((projId) => (
                 <CommandItem
-                  key={framework.value}
-                  value={framework.value}
+                  key={projId.value}
+                  value={projId.value}
                   onSelect={(currentValue) => {
                     setValue(currentValue === value ? "" : currentValue)
                     setOpen(false)
                   }}
                 >
-                  {framework.label}
+                  {projId.label}
                   <CheckIcon
                     className={cn(
                       "ml-auto h-4 w-4",
-                      value === framework.value ? "opacity-100" : "opacity-0"
+                      value === projId.value ? "opacity-100" : "opacity-0"
                     )}
                   />
                 </CommandItem>

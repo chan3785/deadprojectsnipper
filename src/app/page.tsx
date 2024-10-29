@@ -2,7 +2,6 @@
 import {
   Card,
   CardContent,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
@@ -12,7 +11,6 @@ import {
 } from "@/components/ui/tabs"
 import { MainNav } from "./components/main-nav"
 import { Overview } from "./components/overview"
-import { Search } from "./components/search"
 import { UserNav } from "./components/user-nav"
 import { Icons } from "./components/icons";
 import { TrendingUp } from "lucide-react"
@@ -20,7 +18,6 @@ import { ScoreChart } from "./components/scorechart"
 import { GithubChart } from "./components/githubchart"
 import { TwitterChart } from "./components/twitterchart"
 import { NearChart } from "./components/nearchart"
-import Welcome from '@/markdown/welcome.mdx'
 import GithubReport from '@/markdown/githubreport.mdx'
 import TwitterReport from '@/markdown/twitterreport.mdx'
 import NearReport from '@/markdown/nearreport.mdx'
