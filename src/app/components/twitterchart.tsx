@@ -29,6 +29,7 @@ interface ActivityData {
 
 interface ApiResponse {
   activity_data_list: ActivityData[];
+  body: string;
 }
 
 const chartConfig = {

@@ -31,6 +31,7 @@ interface ActivityData {
 }
 
 interface ApiResponse {
+  body: string;
   activity_data_list: ActivityData[];
 }
 
