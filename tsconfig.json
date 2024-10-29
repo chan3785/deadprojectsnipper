@@ -21,6 +21,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "../ui/apps/www/app/(app)/examples/dashboard/components/overview.tsx", "../ui/apps/www/app/(app)/examples/dashboard/components/recent-sales.tsx", "../ui/apps/www/app/(app)/examples/dashboard/components/search.tsx", "../ui/apps/www/app/(app)/examples/dashboard/components/team-switcher.tsx", "../ui/apps/www/app/(app)/examples/dashboard/components/user-nav.tsx", "../ui/apps/www/app/(app)/examples/dashboard/components/main-nav.tsx"],
   "exclude": ["node_modules"]
 }
