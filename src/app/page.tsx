@@ -21,8 +21,13 @@ import { GithubChart } from "./components/githubchart"
 import { TwitterChart } from "./components/twitterchart"
 import { NearChart } from "./components/nearchart"
 import Welcome from '@/markdown/welcome.mdx'
+import GithubReport from '@/markdown/githubreport.mdx'
+import TwitterReport from '@/markdown/twitterreport.mdx'
+import NearReport from '@/markdown/nearreport.mdx'
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { ComboboxDemo } from "./components/command"
 
 interface ScoreOverview {
   github: { score: number };
@@ -81,7 +86,7 @@ export default function DashboardPage() {
           <div className="flex h-16 items-center px-4">
             <MainNav className="mx-6" />
             <div className="ml-auto flex items-center space-x-4">
-              <Search />
+              <ComboboxDemo />
               <UserNav />
             </div>
           </div>
@@ -223,7 +228,7 @@ export default function DashboardPage() {
                     <CardTitle>Report for Github</CardTitle>
                   </CardHeader>
                     <CardContent>
-                      <Welcome/>
+                      <GithubReport/>
                     </CardContent>
                 </Card>
                 <Card className=" h-[340px]">
@@ -231,8 +236,7 @@ export default function DashboardPage() {
                     <CardTitle>Report for Twitter</CardTitle>
                   </CardHeader>
                     <CardContent>
-                    <Welcome/>
-                      
+                    <TwitterReport/>
                     </CardContent>
                 </Card>
                 <Card className=" h-[340px]">
@@ -240,11 +244,9 @@ export default function DashboardPage() {
                     <CardTitle>Report for Near</CardTitle>
                   </CardHeader>
                     <CardContent>
-                    <Welcome/>
-                      
+                    <NearReport/>
                     </CardContent>
                 </Card>
-
                 </div>
               </div>
             </TabsContent>
