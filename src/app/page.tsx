@@ -18,7 +18,6 @@ import { NearChart } from "./components/nearchart"
 import GithubReport from '@/markdown/githubreport.mdx'
 import TwitterReport from '@/markdown/twitterreport.mdx'
 import NearReport from '@/markdown/nearreport.mdx'
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSearchParams } from "next/navigation"
@@ -68,7 +67,7 @@ interface ApiResponse {
 export default function DashboardPage() {
   const [activityData, setActivityData] = useState<ApiResponse | null>(null);
   const searchParams = useSearchParams()
-  const [value, setValue] = useState<string | null>(null);
+  const [value, setValue] = useState<string | null>('tenkdao.near');
   const [githubreport, setGithubData] = useState<string | null>(null);
   const [twitterreport, setTwitterData] = useState<string | null>(null);
   const [nearreport, setNearData] = useState<string | null>(null);
