@@ -18,6 +18,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { Link } from "lucide-react"
 
 const projectid = [
   {
@@ -107,7 +108,7 @@ export function ComboboxDemo() {
       </PopoverTrigger>
       <PopoverContent className="w-[500px] p-0">
         <Command>
-          <CommandInput placeholder="(i.e. tenkdao.near)" className="h-9" />
+          <CommandInput placeholder="Find your project by near account id (i.e. tenkdao.near)" className="h-9" />
           <CommandList>
             <CommandEmpty>No Project found.</CommandEmpty>
             <CommandGroup>
@@ -120,6 +121,7 @@ export function ComboboxDemo() {
                     setOpen(false)
                   }}
                 >
+                <a href="/"></a>
                   {projId.label}
                   <CheckIcon
                     className={cn(

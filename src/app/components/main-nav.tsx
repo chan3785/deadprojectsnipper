@@ -17,6 +17,8 @@ export function MainNav({
       >
         Home
       </Link>
+
+      <p className=" text-xs text-gray-500 justify-end">WIP Demo: only few projects available at the moment; data updated daily</p>
     </nav>
   )
 }

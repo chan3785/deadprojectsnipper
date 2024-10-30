@@ -101,9 +101,6 @@ export default function DashboardPage() {
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">+{totalTwitterScore}</div>
-                    <p className="text-xs text-muted-foreground">
-                      +100.13% from last month
-                      </p>
                   </CardContent>
                 </Card>
                 <Card>
@@ -112,9 +109,6 @@ export default function DashboardPage() {
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">+{totalGithubScore}</div>
-                    <p className="text-xs text-muted-foreground">
-                      +180.1% from last month
-                    </p>
                   </CardContent>
                 </Card>
                 <Card>
@@ -135,9 +129,6 @@ export default function DashboardPage() {
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">+{totalTransactions}</div>
-                    <p className="text-xs text-muted-foreground">
-                      +19% from last month
-                    </p>
                   </CardContent>
                 </Card>
                 <Card>
@@ -165,15 +156,12 @@ export default function DashboardPage() {
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
-                      Rate Of Change
+                      Overall Score
                     </CardTitle>
-                    <TrendingUp className="h-4 w-4"/>
+                    <TrendingUp className="h-5 w-5"/>
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">+{totalOverallScore}</div>
-                    <p className="text-xs text-muted-foreground">
-                      +10.1% from last month
-                    </p>
                   </CardContent>
                 </Card>
               </div>
@@ -222,24 +210,21 @@ export default function DashboardPage() {
                   </CardContent>
                 </Card>
                 <Card className=" h-[340px]">
-                <CardHeader>
-                    <CardTitle>Report for Github</CardTitle>
+                <CardHeader className=" p-3">
                   </CardHeader>
                     <CardContent>
                       <GithubReport/>
                     </CardContent>
                 </Card>
                 <Card className=" h-[340px]">
-                <CardHeader>
-                    <CardTitle>Report for Twitter</CardTitle>
+                <CardHeader className=" p-3">
                   </CardHeader>
                     <CardContent>
                     <TwitterReport/>
                     </CardContent>
                 </Card>
                 <Card className=" h-[340px]">
-                <CardHeader>
-                    <CardTitle>Report for Near</CardTitle>
+                <CardHeader className=" p-3">
                   </CardHeader>
                     <CardContent>
                     <NearReport/>
