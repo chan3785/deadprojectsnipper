@@ -1,5 +1,4 @@
 "use client"
-
 import {
   Card,
   CardContent,
@@ -227,6 +226,7 @@ useEffect(() => {
                 <div className="col-span-3">
                 <Card className=" h-[340px]">
                 <CardHeader className=" p-3">
+                <CardTitle>Github Report</CardTitle>
                   </CardHeader>
                     <CardContent>
                       <MDXProvider>
@@ -236,6 +236,7 @@ useEffect(() => {
                 </Card>
                 <Card className=" h-[340px]">
                 <CardHeader className=" p-3">
+                <CardTitle>Twitter Report</CardTitle>
                   </CardHeader>
                     <CardContent>
                     <MDXProvider>
@@ -245,6 +246,7 @@ useEffect(() => {
                 </Card>
                 <Card className=" h-[340px]">
                 <CardHeader className=" p-3">
+                <CardTitle>NEAR Report</CardTitle>
                   </CardHeader>
                     <CardContent>
                       <MDXProvider>
