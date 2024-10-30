@@ -1,12 +1,15 @@
- 
-## Welcome to my MDX page!
- 
-This is some **bold** and _italics_ text.
- 
-This is a list in markdown:
- 
-- One
-- Two
-- Three
- 
-Checkout my React component:
+import React from 'react';
+import ReactMarkdown from 'react-markdown';
+
+export default function MyMDXFile({ apiData }) {
+  return (
+    <div>
+      <h3>Near Report</h3>
+      {apiData ? (
+        <ReactMarkdown>{apiData}</ReactMarkdown> 
+      ) : (
+        <p>Loading...</p>
+      )}
+    </div>
+  );
+}

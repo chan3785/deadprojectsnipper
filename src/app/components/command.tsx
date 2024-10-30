@@ -92,6 +92,7 @@ export function ComboboxDemo() {
   const [open, setOpen] = React.useState(false)
   const [value, setValue] = React.useState("")
   const router = useRouter();
+  
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -122,8 +123,8 @@ export function ComboboxDemo() {
                     setValue(currentValue === value ? "" : currentValue)
                     setOpen(false)
                     if (currentValue) {
-                        router.push(`/?value=${currentValue}`)
-                      }
+                      window.location.href = `/?value=${currentValue}`;
+                    }
                   }}
                 >
                   {projId.label}

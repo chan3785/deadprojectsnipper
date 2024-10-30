@@ -13,26 +13,47 @@ import {
 
 import axios from 'axios';
 import { useEffect, useState } from "react";
-
-interface GitHubData {
-  commit_count: number;
-  open_issues: number;
-  closed_issues: number;
-  merged_requests: number;
-  pull_requests: number;
-  forks: number;
-  watchers: number;
-  followers: number;
-}
+import { useSearchParams } from "next/navigation";
 
 interface ActivityData {
-  record_date: string;
-  github: GitHubData;
+  record_date: string
+  github: {
+    commit_count: number
+    open_issues: number
+    closed_issues: number
+    merged_requests: number
+    pull_requests: number
+    forks: number
+    watchers: number
+    followers: number
+  }
+  twitter: {
+    count: number
+    like_per_tweet: number
+    retweet_per_tweet: number
+    reply_per_tweet: number
+    followers: number
+  }
+  near_transactions: {
+    count: number
+  }
 }
 
 interface ApiResponse {
-  body: string;
-  activity_data_list: ActivityData[];
+  activity_data_list: ActivityData[]
+  reports: {
+    overall_report: string
+    github_report: string
+    twitter_report: string
+    near_report: string
+  }
+  score_overview: {
+    github: { score: number }
+    twitter: { score: number }
+    near: { score: number }
+    overall_total_score: number
+    isAlive: boolean
+  }
 }
 
 
@@ -81,22 +102,26 @@ const chartConfig = {
 
 export function GithubChart() {
   const [activityData, setActivityData] = useState<ApiResponse | null>(null);
-
+  const searchParams = useSearchParams()
+  const value = searchParams.get('value')
+  
   useEffect(() => {
-    const fetchActivityData = async (apiUrl: string) => {
+    if (!value) return
+    const fetchActivityData = async (apiUrl: string, near_address: string) => {
       try {
-        const response = await axios.get<ApiResponse>(apiUrl);
-        const data: ApiResponse = JSON.parse(response.data.body);
-        setActivityData(data);
-        console.log(data);
+        const response = await axios.get<ApiResponse>(`${apiUrl}?near_address=${near_address}`);
+        setActivityData(response.data)
+        console.log(response.data);
       } catch (error) {
         console.error('Error fetching activity data:', error);
       }
     };
 
-    fetchActivityData('https://h03g0va5si.execute-api.us-east-1.amazonaws.com/getdata');
-  }, []);
-  const commitchartData = [
+    fetchActivityData('https://h03g0va5si.execute-api.us-east-1.amazonaws.com/getdata', `${value}`);
+    console.log(value);
+  }, [value]);
+  
+    const commitchartData = [
     { date: `${activityData?.activity_data_list[5].record_date}`, commits: activityData?.activity_data_list[5].github.commit_count, opened: activityData?.activity_data_list[5].github.open_issues, closed: activityData?.activity_data_list[5].github.closed_issues, pulls: activityData?.activity_data_list[5].github.pull_requests, merge: activityData?.activity_data_list[5].github.merged_requests, fork: activityData?.activity_data_list[5].github.forks, watch: activityData?.activity_data_list[5].github.watchers, follow: activityData?.activity_data_list[5].github.followers },
     { date: `${activityData?.activity_data_list[4].record_date}`, commits: activityData?.activity_data_list[4].github.commit_count, opened: activityData?.activity_data_list[4].github.open_issues, closed: activityData?.activity_data_list[4].github.closed_issues, pulls: activityData?.activity_data_list[4].github.pull_requests, merge: activityData?.activity_data_list[4].github.merged_requests, fork: activityData?.activity_data_list[4].github.forks, watch: activityData?.activity_data_list[4].github.watchers, follow: activityData?.activity_data_list[4].github.followers },
     { date: `${activityData?.activity_data_list[3].record_date}`, commits: activityData?.activity_data_list[3].github.commit_count, opened: activityData?.activity_data_list[3].github.open_issues, closed: activityData?.activity_data_list[3].github.closed_issues, pulls: activityData?.activity_data_list[3].github.pull_requests, merge: activityData?.activity_data_list[3].github.merged_requests, fork: activityData?.activity_data_list[3].github.forks, watch: activityData?.activity_data_list[3].github.watchers, follow: activityData?.activity_data_list[3].github.followers },

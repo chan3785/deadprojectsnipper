@@ -12,24 +12,48 @@ import {
 } from "@/components/ui/chart"
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useSearchParams } from "next/navigation";
 export const description = "A stacked bar chart with a legend"
 
-interface TwitterData {
-  count: number;
-  like_per_tweet: number;
-  retweet_per_tweet: number;
-  reply_per_tweet: number;
-  followers: number;
-}
-
 interface ActivityData {
-  record_date: string;
-  twitter: TwitterData;
+  record_date: string
+  github: {
+    commit_count: number
+    open_issues: number
+    closed_issues: number
+    merged_requests: number
+    pull_requests: number
+    forks: number
+    watchers: number
+    followers: number
+  }
+  twitter: {
+    count: number
+    like_per_tweet: number
+    retweet_per_tweet: number
+    reply_per_tweet: number
+    followers: number
+  }
+  near_transactions: {
+    count: number
+  }
 }
 
 interface ApiResponse {
-  activity_data_list: ActivityData[];
-  body: string;
+  activity_data_list: ActivityData[]
+  reports: {
+    overall_report: string
+    github_report: string
+    twitter_report: string
+    near_report: string
+  }
+  score_overview: {
+    github: { score: number }
+    twitter: { score: number }
+    near: { score: number }
+    overall_total_score: number
+    isAlive: boolean
+  }
 }
 
 const chartConfig = {
@@ -57,20 +81,25 @@ const chartConfig = {
 
 export function TwitterChart() {
   const [activityData, setActivityData] = useState<ApiResponse | null>(null);
-
+  const searchParams = useSearchParams()
+  const value = searchParams.get('value')
+  
   useEffect(() => {
-    const fetchActivityData = async (apiUrl: string) => {
+    if (!value) return
+    const fetchActivityData = async (apiUrl: string, near_address: string) => {
       try {
-        const response = await axios.get<ApiResponse>(apiUrl);
-        const data: ApiResponse = JSON.parse(response.data.body);
-        setActivityData(data);
+        const response = await axios.get<ApiResponse>(`${apiUrl}?near_address=${near_address}`);
+        setActivityData(response.data)
+        console.log(response.data);
       } catch (error) {
         console.error('Error fetching activity data:', error);
       }
     };
 
-    fetchActivityData('https://h03g0va5si.execute-api.us-east-1.amazonaws.com/getdata');
-  }, []);
+    fetchActivityData('https://h03g0va5si.execute-api.us-east-1.amazonaws.com/getdata', `${value}`);
+    console.log(value);
+  }, [value]);
+  
 
   const chartdata = [
     { month: activityData?.activity_data_list[5].record_date, tweets: activityData?.activity_data_list[5].twitter.count, likes: activityData?.activity_data_list[5].twitter.like_per_tweet, reply: activityData?.activity_data_list[5].twitter.reply_per_tweet, retweets: activityData?.activity_data_list[5].twitter.retweet_per_tweet, followers: activityData?.activity_data_list[5].twitter.followers },

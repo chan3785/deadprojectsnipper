@@ -11,21 +11,49 @@ import {
   ChartTooltipContent,
   ChartLegendContent
 } from "@/components/ui/chart"
+import { useSearchParams } from "next/navigation";
 
 export const description = "A stacked bar chart with a legend"
 
-interface NearTransactions {
-  count: number;
-}
-
 interface ActivityData {
-  record_date: string;
-  near_transactions: NearTransactions;
+  record_date: string
+  github: {
+    commit_count: number
+    open_issues: number
+    closed_issues: number
+    merged_requests: number
+    pull_requests: number
+    forks: number
+    watchers: number
+    followers: number
+  }
+  twitter: {
+    count: number
+    like_per_tweet: number
+    retweet_per_tweet: number
+    reply_per_tweet: number
+    followers: number
+  }
+  near_transactions: {
+    count: number
+  }
 }
 
 interface ApiResponse {
-  activity_data_list: ActivityData[];
-  body: string;
+  activity_data_list: ActivityData[]
+  reports: {
+    overall_report: string
+    github_report: string
+    twitter_report: string
+    near_report: string
+  }
+  score_overview: {
+    github: { score: number }
+    twitter: { score: number }
+    near: { score: number }
+    overall_total_score: number
+    isAlive: boolean
+  }
 }
 
 const chartConfig = {
@@ -37,29 +65,32 @@ const chartConfig = {
 
 export function NearChart() {
   const [activityData, setActivityData] = useState<ApiResponse | null>(null);
-
+  const searchParams = useSearchParams()
+  const value = searchParams.get('value')
+  
   useEffect(() => {
-    const fetchActivityData = async (apiUrl: string) => {
+    if (!value) return
+    const fetchActivityData = async (apiUrl: string, near_address: string) => {
       try {
-        const response = await axios.get<ApiResponse>(apiUrl);
-        const data: ApiResponse = JSON.parse(response.data.body);
-        setActivityData(data);
-        console.log(data);
+        const response = await axios.get<ApiResponse>(`${apiUrl}?near_address=${near_address}`);
+        setActivityData(response.data)
+        console.log(response.data);
       } catch (error) {
         console.error('Error fetching activity data:', error);
       }
     };
 
-    fetchActivityData('https://h03g0va5si.execute-api.us-east-1.amazonaws.com/getdata');
-  }, []);
+    fetchActivityData('https://h03g0va5si.execute-api.us-east-1.amazonaws.com/getdata', `${value}`);
+    console.log(value);
+  }, [value]);
 
   const chartData = [
-    { month: activityData?.activity_data_list[5].record_date, transactions: activityData?.activity_data_list[5].near_transactions.count },
-    { month: activityData?.activity_data_list[4].record_date, transactions: activityData?.activity_data_list[4].near_transactions.count },
-    { month: activityData?.activity_data_list[3].record_date, transactions: activityData?.activity_data_list[3].near_transactions.count },
-    { month: activityData?.activity_data_list[2].record_date, transactions: activityData?.activity_data_list[2].near_transactions.count },
-    { month: activityData?.activity_data_list[1].record_date, transactions: activityData?.activity_data_list[1].near_transactions.count },
-    { month: activityData?.activity_data_list[0].record_date, transactions: activityData?.activity_data_list[0].near_transactions.count },
+    { month: activityData?.activity_data_list[5]?.record_date, transactions: activityData?.activity_data_list[5]?.near_transactions.count },
+    { month: activityData?.activity_data_list[4]?.record_date, transactions: activityData?.activity_data_list[4]?.near_transactions.count },
+    { month: activityData?.activity_data_list[3]?.record_date, transactions: activityData?.activity_data_list[3]?.near_transactions.count },
+    { month: activityData?.activity_data_list[2]?.record_date, transactions: activityData?.activity_data_list[2]?.near_transactions.count },
+    { month: activityData?.activity_data_list[1]?.record_date, transactions: activityData?.activity_data_list[1]?.near_transactions.count },
+    { month: activityData?.activity_data_list[0]?.record_date, transactions: activityData?.activity_data_list[0]?.near_transactions.count },
   ]
   return (
     <ResponsiveContainer width="100%" height={250}>

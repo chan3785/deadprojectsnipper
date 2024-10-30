@@ -9,12 +9,8 @@ import {
   Tabs,
   TabsContent,
 } from "@/components/ui/tabs"
-import { MainNav } from "./components/main-nav"
-import { Overview } from "./components/overview"
-import { UserNav } from "./components/user-nav"
 import { Icons } from "./components/icons";
 import { TrendingUp } from "lucide-react"
-import { ScoreChart } from "./components/scorechart"
 import { GithubChart } from "./components/githubchart"
 import { TwitterChart } from "./components/twitterchart"
 import { NearChart } from "./components/nearchart"
@@ -24,44 +20,81 @@ import NearReport from '@/markdown/nearreport.mdx'
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { ComboboxDemo } from "./components/command"
-import { useRouter, useSearchParams } from "next/navigation"
-
-interface ScoreOverview {
-  github: { score: number };
-  twitter: { score: number };
-  near: { score: number };
-  overall_total_score: number;
-}
+import { useSearchParams } from "next/navigation"
+import { MDXProvider } from '@mdx-js/react';
 
 interface ActivityData {
-  record_date: string;
-  score_overview: ScoreOverview;
+  record_date: string
+  github: {
+    commit_count: number
+    open_issues: number
+    closed_issues: number
+    merged_requests: number
+    pull_requests: number
+    forks: number
+    watchers: number
+    followers: number
+  }
+  twitter: {
+    count: number
+    like_per_tweet: number
+    retweet_per_tweet: number
+    reply_per_tweet: number
+    followers: number
+  }
+  near_transactions: {
+    count: number
+  }
 }
 
 interface ApiResponse {
-  activity_data_list: ActivityData[];
-  body: string;
+  activity_data_list: ActivityData[]
+  reports: {
+    overall_report: string
+    github_report: string
+    twitter_report: string
+    near_report: string
+  }
+  score_overview: {
+    github: { score: number }
+    twitter: { score: number }
+    near: { score: number }
+    overall_total_score: number
+    isAlive: boolean
+  }
 }
 
 export default function DashboardPage() {
   const [activityData, setActivityData] = useState<ApiResponse | null>(null);
   const searchParams = useSearchParams()
-  const value = searchParams.get('value')
+  const [value, setValue] = useState<string | null>(null);
+  const [githubreport, setGithubData] = useState<string | null>(null);
+  const [twitterreport, setTwitterData] = useState<string | null>(null);
+  const [nearreport, setNearData] = useState<string | null>(null);
+// value 상태를 업데이트하는 useEffect
+useEffect(() => {
+  const newValue = searchParams.get('value');
+  if (newValue) {
+    setValue(newValue);  // 상태 업데이트
+  }
+}, [searchParams]);
+  
   useEffect(() => {
     if (!value) return
     const fetchActivityData = async (apiUrl: string, near_address: string) => {
       try {
         const response = await axios.get<ApiResponse>(`${apiUrl}?near_address=${near_address}`);
-        const data: ApiResponse = JSON.parse(response.data.body);
-        setActivityData(data);
-        console.log(data);
+        setActivityData(response.data)
+        setGithubData(response.data.reports.github_report);
+        setTwitterData(response.data.reports.twitter_report);
+        setNearData(response.data.reports.near_report);
+        console.log(response.data);
       } catch (error) {
         console.error('Error fetching activity data:', error);
       }
     };
 
-    fetchActivityData('https://h03g0va5si.execute-api.us-east-1.amazonaws.com/getdata', value);
+    fetchActivityData('https://h03g0va5si.execute-api.us-east-1.amazonaws.com/getdata', `${value}`);
     console.log(value);
   }, [value]);
 
@@ -95,7 +128,7 @@ export default function DashboardPage() {
                     <Icons.twitter className="mr-2 h-6 w-6" />
                   </CardHeader>
                   <CardContent>
-                    {/* <div className="text-2xl font-bold">+{totalTwitterScore}</div> */}
+                    <div className="text-2xl font-bold">+{activityData?.score_overview.twitter.score}</div>
                   </CardContent>
                 </Card>
                 <Card>
@@ -103,7 +136,7 @@ export default function DashboardPage() {
                     <Icons.gitHub className="mr-2 h-6 w-6" />
                   </CardHeader>
                   <CardContent>
-                    {/* <div className="text-2xl font-bold">+{totalGithubScore}</div> */}
+                    <div className="text-2xl font-bold">+{activityData?.score_overview.github.score}</div>
                   </CardContent>
                 </Card>
                 <Card>
@@ -123,7 +156,7 @@ export default function DashboardPage() {
                     </svg>
                   </CardHeader>
                   <CardContent>
-                    {/* <div className="text-2xl font-bold">+{totalTransactions}</div> */}
+                    <div className="text-2xl font-bold">+{activityData?.score_overview.near.score}</div>
                   </CardContent>
                 </Card>
                 <Card>
@@ -145,7 +178,11 @@ export default function DashboardPage() {
                     </svg>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-3xl font-bold text-green-400">Alive</div>
+                    <div className={`text-3xl font-bold ${
+                         activityData?.score_overview.isAlive ? "text-green-400" : "text-red-400"
+                       }`}>
+                        {activityData?.score_overview.isAlive ? "Alive" : "Dead"}
+                    </div>
                   </CardContent>
                 </Card>
                 <Card>
@@ -156,7 +193,7 @@ export default function DashboardPage() {
                     <TrendingUp className="h-5 w-5"/>
                   </CardHeader>
                   <CardContent>
-                    {/* <div className="text-2xl font-bold">+{totalOverallScore}</div> */}
+                    <div className="text-2xl font-bold">+{activityData?.score_overview.overall_total_score}</div>
                   </CardContent>
                 </Card>
               </div>
@@ -164,18 +201,10 @@ export default function DashboardPage() {
                 <div className="col-span-4 gap-y-4">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Overview</CardTitle>
-                  </CardHeader>
-                  <CardContent className="pl-2">
-                    {/* <Overview /> */}
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader>
                     <CardTitle>Github Chart</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    {/* <GithubChart/> */}
+                    <GithubChart/>
                   </CardContent>
                 </Card>
                 <Card>
@@ -183,7 +212,7 @@ export default function DashboardPage() {
                     <CardTitle>Twitter Chart</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    {/* <TwitterChart/> */}
+                    <TwitterChart/>
                   </CardContent>
                 </Card>
                 <Card>
@@ -191,38 +220,36 @@ export default function DashboardPage() {
                     <CardTitle>Near Chart</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    {/* <NearChart/> */}
+                    <NearChart/>
                   </CardContent>
                 </Card>
                 </div>
                 <div className="col-span-3">
-                  <Card>
-                <CardHeader>
-                    <CardTitle>Total Score</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    {/* <ScoreChart/> */}
-                  </CardContent>
-                </Card>
                 <Card className=" h-[340px]">
                 <CardHeader className=" p-3">
                   </CardHeader>
                     <CardContent>
-                      <GithubReport/>
+                      <MDXProvider>
+                        <GithubReport apiData={githubreport} /> 
+                      </MDXProvider>
                     </CardContent>
                 </Card>
                 <Card className=" h-[340px]">
                 <CardHeader className=" p-3">
                   </CardHeader>
                     <CardContent>
-                    <TwitterReport/>
+                    <MDXProvider>
+                        <TwitterReport apiData={twitterreport} /> 
+                      </MDXProvider>
                     </CardContent>
                 </Card>
                 <Card className=" h-[340px]">
                 <CardHeader className=" p-3">
                   </CardHeader>
                     <CardContent>
-                    <NearReport/>
+                      <MDXProvider>
+                        <NearReport apiData={nearreport} /> 
+                      </MDXProvider>
                     </CardContent>
                 </Card>
                 </div>
