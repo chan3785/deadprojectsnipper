@@ -16,9 +16,9 @@ export const description = "A stacked bar chart with a legend"
 
 interface TwitterData {
   count: number;
-  average_like_per_tweet: number;
-  average_retweet_per_tweet: number;
-  average_reply_per_tweet: number;
+  like_per_tweet: number;
+  retweet_per_tweet: number;
+  reply_per_tweet: number;
   followers: number;
 }
 
@@ -73,12 +73,12 @@ export function TwitterChart() {
   }, []);
 
   const chartdata = [
-    { month: activityData?.activity_data_list[5].record_date, tweets: activityData?.activity_data_list[5].twitter.count, likes: activityData?.activity_data_list[5].twitter.average_like_per_tweet, reply: activityData?.activity_data_list[5].twitter.average_reply_per_tweet, retweets: activityData?.activity_data_list[5].twitter.average_retweet_per_tweet, followers: activityData?.activity_data_list[5].twitter.followers },
-    { month: activityData?.activity_data_list[4].record_date, tweets: activityData?.activity_data_list[4].twitter.count, likes: activityData?.activity_data_list[4].twitter.average_like_per_tweet, reply: activityData?.activity_data_list[4].twitter.average_reply_per_tweet, retweets: activityData?.activity_data_list[4].twitter.average_retweet_per_tweet, followers: activityData?.activity_data_list[4].twitter.followers },
-    { month: activityData?.activity_data_list[3].record_date, tweets: activityData?.activity_data_list[3].twitter.count, likes: activityData?.activity_data_list[3].twitter.average_like_per_tweet, reply: activityData?.activity_data_list[3].twitter.average_reply_per_tweet, retweets: activityData?.activity_data_list[3].twitter.average_retweet_per_tweet, followers: activityData?.activity_data_list[3].twitter.followers },
-    { month: activityData?.activity_data_list[2].record_date, tweets: activityData?.activity_data_list[2].twitter.count, likes: activityData?.activity_data_list[2].twitter.average_like_per_tweet, reply: activityData?.activity_data_list[2].twitter.average_reply_per_tweet, retweets: activityData?.activity_data_list[2].twitter.average_retweet_per_tweet, followers: activityData?.activity_data_list[2].twitter.followers },
-    { month: activityData?.activity_data_list[1].record_date, tweets: activityData?.activity_data_list[1].twitter.count, likes: activityData?.activity_data_list[1].twitter.average_like_per_tweet, reply: activityData?.activity_data_list[1].twitter.average_reply_per_tweet, retweets: activityData?.activity_data_list[1].twitter.average_retweet_per_tweet, followers: activityData?.activity_data_list[1].twitter.followers },
-    { month: activityData?.activity_data_list[0].record_date, tweets: activityData?.activity_data_list[0].twitter.count, likes: activityData?.activity_data_list[0].twitter.average_like_per_tweet, reply: activityData?.activity_data_list[0].twitter.average_reply_per_tweet, retweets: activityData?.activity_data_list[0].twitter.average_retweet_per_tweet, followers: activityData?.activity_data_list[0].twitter.followers },
+    { month: activityData?.activity_data_list[5].record_date, tweets: activityData?.activity_data_list[5].twitter.count, likes: activityData?.activity_data_list[5].twitter.like_per_tweet, reply: activityData?.activity_data_list[5].twitter.reply_per_tweet, retweets: activityData?.activity_data_list[5].twitter.retweet_per_tweet, followers: activityData?.activity_data_list[5].twitter.followers },
+    { month: activityData?.activity_data_list[4].record_date, tweets: activityData?.activity_data_list[4].twitter.count, likes: activityData?.activity_data_list[4].twitter.like_per_tweet, reply: activityData?.activity_data_list[4].twitter.reply_per_tweet, retweets: activityData?.activity_data_list[4].twitter.retweet_per_tweet, followers: activityData?.activity_data_list[4].twitter.followers },
+    { month: activityData?.activity_data_list[3].record_date, tweets: activityData?.activity_data_list[3].twitter.count, likes: activityData?.activity_data_list[3].twitter.like_per_tweet, reply: activityData?.activity_data_list[3].twitter.reply_per_tweet, retweets: activityData?.activity_data_list[3].twitter.retweet_per_tweet, followers: activityData?.activity_data_list[3].twitter.followers },
+    { month: activityData?.activity_data_list[2].record_date, tweets: activityData?.activity_data_list[2].twitter.count, likes: activityData?.activity_data_list[2].twitter.like_per_tweet, reply: activityData?.activity_data_list[2].twitter.reply_per_tweet, retweets: activityData?.activity_data_list[2].twitter.retweet_per_tweet, followers: activityData?.activity_data_list[2].twitter.followers },
+    { month: activityData?.activity_data_list[1].record_date, tweets: activityData?.activity_data_list[1].twitter.count, likes: activityData?.activity_data_list[1].twitter.like_per_tweet, reply: activityData?.activity_data_list[1].twitter.reply_per_tweet, retweets: activityData?.activity_data_list[1].twitter.retweet_per_tweet, followers: activityData?.activity_data_list[1].twitter.followers },
+    { month: activityData?.activity_data_list[0].record_date, tweets: activityData?.activity_data_list[0].twitter.count, likes: activityData?.activity_data_list[0].twitter.like_per_tweet, reply: activityData?.activity_data_list[0].twitter.reply_per_tweet, retweets: activityData?.activity_data_list[0].twitter.retweet_per_tweet, followers: activityData?.activity_data_list[0].twitter.followers },
   ]
   return (
     <ResponsiveContainer width="100%" height={250}>

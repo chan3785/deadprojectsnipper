@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { UserNav } from "./components/user-nav";
+import { ComboboxDemo } from "./components/command";
+import { MainNav } from "./components/main-nav";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -28,6 +31,17 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <div className="hidden flex-col md:flex">
+        <div className="border-b">
+          <div className="flex h-16 items-center px-4">
+            <MainNav className="mx-6" />
+            <div className="ml-auto flex items-center space-x-4">
+              <ComboboxDemo />
+              <UserNav />
+            </div>
+          </div>
+        </div>
+        </div>
 
         {children}
       </body>

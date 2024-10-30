@@ -19,6 +19,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { Link } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 const projectid = [
   {
@@ -90,6 +91,7 @@ const projectid = [
 export function ComboboxDemo() {
   const [open, setOpen] = React.useState(false)
   const [value, setValue] = React.useState("")
+  const router = useRouter();
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -119,9 +121,11 @@ export function ComboboxDemo() {
                   onSelect={(currentValue) => {
                     setValue(currentValue === value ? "" : currentValue)
                     setOpen(false)
+                    if (currentValue) {
+                        router.push(`/?value=${currentValue}`)
+                      }
                   }}
                 >
-                <a href="/"></a>
                   {projId.label}
                   <CheckIcon
                     className={cn(

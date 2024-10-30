@@ -25,6 +25,7 @@ import NearReport from '@/markdown/nearreport.mdx'
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ComboboxDemo } from "./components/command"
+import { useRouter, useSearchParams } from "next/navigation"
 
 interface ScoreOverview {
   github: { score: number };
@@ -45,11 +46,13 @@ interface ApiResponse {
 
 export default function DashboardPage() {
   const [activityData, setActivityData] = useState<ApiResponse | null>(null);
-
+  const searchParams = useSearchParams()
+  const value = searchParams.get('value')
   useEffect(() => {
-    const fetchActivityData = async (apiUrl: string) => {
+    if (!value) return
+    const fetchActivityData = async (apiUrl: string, near_address: string) => {
       try {
-        const response = await axios.get<ApiResponse>(apiUrl);
+        const response = await axios.get<ApiResponse>(`${apiUrl}?near_address=${near_address}`);
         const data: ApiResponse = JSON.parse(response.data.body);
         setActivityData(data);
         console.log(data);
@@ -58,37 +61,29 @@ export default function DashboardPage() {
       }
     };
 
-    fetchActivityData('https://h03g0va5si.execute-api.us-east-1.amazonaws.com/getdata');
-  }, []);
+    fetchActivityData('https://h03g0va5si.execute-api.us-east-1.amazonaws.com/getdata', value);
+    console.log(value);
+  }, [value]);
 
-  const totalTwitterScore = activityData?.activity_data_list.reduce((total, activity) => {
-    return total + activity.score_overview.twitter.score;
-  }, 0) || 0; // activityData가 null일 경우 기본값 0 반환
+  // const totalTwitterScore = activityData?.activity_data_list.reduce((total, activity) => {
+  //   return total + activity.score_overview.twitter.score;
+  // }, 0) || 0; // activityData가 null일 경우 기본값 0 반환
 
-  const totalGithubScore = activityData?.activity_data_list.reduce((total, activity) => {
-    return total + activity.score_overview.github.score;
-  }, 0) || 0; // activityData가 null일 경우 기본값 0 반환
+  // const totalGithubScore = activityData?.activity_data_list.reduce((total, activity) => {
+  //   return total + activity.score_overview.github.score;
+  // }, 0) || 0; // activityData가 null일 경우 기본값 0 반환
 
-  const totalTransactions = activityData?.activity_data_list.reduce((total, activity) => {
-    return total + activity.score_overview.near.score;
-  }, 0) || 0; // activityData가 null일 경우 기본값 0 반환
+  // const totalTransactions = activityData?.activity_data_list.reduce((total, activity) => {
+  //   return total + activity.score_overview.near.score;
+  // }, 0) || 0; // activityData가 null일 경우 기본값 0 반환
 
-  const totalOverallScore = activityData?.activity_data_list.reduce((total, activity) => {
-    return total + activity.score_overview.overall_total_score;
-  }, 0) || 0; // activityData가 null일 경우 기본값 0 반환
+  // const totalOverallScore = activityData?.activity_data_list.reduce((total, activity) => {
+  //   return total + activity.score_overview.overall_total_score;
+  // }, 0) || 0; // activityData가 null일 경우 기본값 0 반환
 
   return (
     <>
       <div className="hidden flex-col md:flex">
-        <div className="border-b">
-          <div className="flex h-16 items-center px-4">
-            <MainNav className="mx-6" />
-            <div className="ml-auto flex items-center space-x-4">
-              <ComboboxDemo />
-              <UserNav />
-            </div>
-          </div>
-        </div>
         <div className="flex-1 space-y-4 p-8 pt-6">
           <div className="flex items-center justify-between space-y-2">
           </div>
@@ -100,7 +95,7 @@ export default function DashboardPage() {
                     <Icons.twitter className="mr-2 h-6 w-6" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">+{totalTwitterScore}</div>
+                    {/* <div className="text-2xl font-bold">+{totalTwitterScore}</div> */}
                   </CardContent>
                 </Card>
                 <Card>
@@ -108,7 +103,7 @@ export default function DashboardPage() {
                     <Icons.gitHub className="mr-2 h-6 w-6" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">+{totalGithubScore}</div>
+                    {/* <div className="text-2xl font-bold">+{totalGithubScore}</div> */}
                   </CardContent>
                 </Card>
                 <Card>
@@ -128,7 +123,7 @@ export default function DashboardPage() {
                     </svg>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">+{totalTransactions}</div>
+                    {/* <div className="text-2xl font-bold">+{totalTransactions}</div> */}
                   </CardContent>
                 </Card>
                 <Card>
@@ -161,7 +156,7 @@ export default function DashboardPage() {
                     <TrendingUp className="h-5 w-5"/>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">+{totalOverallScore}</div>
+                    {/* <div className="text-2xl font-bold">+{totalOverallScore}</div> */}
                   </CardContent>
                 </Card>
               </div>
@@ -172,7 +167,7 @@ export default function DashboardPage() {
                     <CardTitle>Overview</CardTitle>
                   </CardHeader>
                   <CardContent className="pl-2">
-                    <Overview />
+                    {/* <Overview /> */}
                   </CardContent>
                 </Card>
                 <Card>
@@ -180,7 +175,7 @@ export default function DashboardPage() {
                     <CardTitle>Github Chart</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <GithubChart/>
+                    {/* <GithubChart/> */}
                   </CardContent>
                 </Card>
                 <Card>
@@ -188,7 +183,7 @@ export default function DashboardPage() {
                     <CardTitle>Twitter Chart</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <TwitterChart/>
+                    {/* <TwitterChart/> */}
                   </CardContent>
                 </Card>
                 <Card>
@@ -196,7 +191,7 @@ export default function DashboardPage() {
                     <CardTitle>Near Chart</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <NearChart/>
+                    {/* <NearChart/> */}
                   </CardContent>
                 </Card>
                 </div>
@@ -206,7 +201,7 @@ export default function DashboardPage() {
                     <CardTitle>Total Score</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <ScoreChart/>
+                    {/* <ScoreChart/> */}
                   </CardContent>
                 </Card>
                 <Card className=" h-[340px]">
