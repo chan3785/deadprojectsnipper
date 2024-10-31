@@ -9,11 +9,11 @@ import {
   Tabs,
   TabsContent,
 } from "@/components/ui/tabs"
-import { Icons } from "./components/icons";
+import { Icons } from "../components/icons";
 import { TrendingUp } from "lucide-react"
-import { GithubChart } from "./components/githubchart"
-import { TwitterChart } from "./components/twitterchart"
-import { NearChart } from "./components/nearchart"
+import { GithubChart } from "../components/githubchart"
+import { TwitterChart } from "../components/twitterchart"
+import { NearChart } from "../components/nearchart"
 import GithubReport from '@/markdown/githubreport.mdx'
 import TwitterReport from '@/markdown/twitterreport.mdx'
 import NearReport from '@/markdown/nearreport.mdx'

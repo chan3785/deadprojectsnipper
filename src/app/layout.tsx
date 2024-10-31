@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { UserNav } from "./components/user-nav";
-import { ComboboxDemo } from "./components/command";
-import { MainNav } from "./components/main-nav";
+import { UserNav } from "../components/user-nav";
+import { ComboboxDemo } from "../components/command";
+import { MainNav } from "../components/main-nav";
 import { Suspense } from 'react';
 
 const geistSans = localFont({
