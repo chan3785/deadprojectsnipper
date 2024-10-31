@@ -14,10 +14,10 @@ import { TrendingUp } from "lucide-react"
 import { GithubChart } from "../components/githubchart"
 import { TwitterChart } from "../components/twitterchart"
 import { NearChart } from "../components/nearchart"
-import GithubReport from '@/markdown/githubreport.mdx'
-import TwitterReport from '@/markdown/twitterreport.mdx'
-import NearReport from '@/markdown/nearreport.mdx'
-import React, { useState, useEffect, Suspense } from 'react';
+import GithubReport from '@/markdown/githubreport'
+import TwitterReport from '@/markdown/twitterreport'
+import NearReport from '@/markdown/nearreport'
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSearchParams } from "next/navigation"
 import { MDXProvider } from '@mdx-js/react';
@@ -67,9 +67,6 @@ export default function DashboardPage() {
   const [activityData, setActivityData] = useState<ApiResponse | null>(null);
   const searchParams = useSearchParams()
   const [value, setValue] = useState<string | null>('tenkdao.near');
-  const [githubreport, setGithubData] = useState<string | null>(null);
-  const [twitterreport, setTwitterData] = useState<string | null>(null);
-  const [nearreport, setNearData] = useState<string | null>(null);
 // value 상태를 업데이트하는 useEffect
 useEffect(() => {
   const newValue = searchParams.get('value');
@@ -84,9 +81,6 @@ useEffect(() => {
       try {
         const response = await axios.get<ApiResponse>(`${apiUrl}?near_address=${near_address}`);
         setActivityData(response.data)
-        setGithubData(response.data.reports.github_report);
-        setTwitterData(response.data.reports.twitter_report);
-        setNearData(response.data.reports.near_report);
         console.log(response.data);
       } catch (error) {
         console.error('Error fetching activity data:', error);
@@ -114,7 +108,6 @@ useEffect(() => {
   // }, 0) || 0; // activityData가 null일 경우 기본값 0 반환
 
   return (
-    <Suspense>
     <>
       <div className="hidden flex-col md:flex">
         <div className="flex-1 space-y-4 p-8 pt-6">
@@ -231,7 +224,7 @@ useEffect(() => {
                   </CardHeader>
                     <CardContent>
                       <MDXProvider>
-                        <GithubReport apiData={githubreport} /> 
+                        <GithubReport /> 
                       </MDXProvider>
                     </CardContent>
                 </Card>
@@ -241,7 +234,7 @@ useEffect(() => {
                   </CardHeader>
                     <CardContent>
                     <MDXProvider>
-                        <TwitterReport apiData={twitterreport} /> 
+                        <TwitterReport /> 
                       </MDXProvider>
                     </CardContent>
                 </Card>
@@ -251,7 +244,7 @@ useEffect(() => {
                   </CardHeader>
                     <CardContent>
                       <MDXProvider>
-                        <NearReport apiData={nearreport} /> 
+                        <NearReport /> 
                       </MDXProvider>
                     </CardContent>
                 </Card>
@@ -262,6 +255,5 @@ useEffect(() => {
         </div>
       </div>
     </>
-    </Suspense>
   )
 }
