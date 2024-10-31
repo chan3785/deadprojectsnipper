@@ -94,8 +94,8 @@ export function ScoreChart() {
     { month: activityData?.activity_data_list[0].record_date, score: activityData?.score_overview.overall_total_score },
   ]
   return (
+    <Suspense>
     <ResponsiveContainer width="100%" height={250}>
-      <Suspense>
       <ChartContainer config={chartConfig}>
           <LineChart
             accessibilityLayer
@@ -127,7 +127,7 @@ export function ScoreChart() {
             />
           </LineChart>
         </ChartContainer>
-        </Suspense>
     </ResponsiveContainer>
+    </Suspense>
   )
 }

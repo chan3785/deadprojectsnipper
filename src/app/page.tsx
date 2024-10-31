@@ -114,8 +114,8 @@ useEffect(() => {
   // }, 0) || 0; // activityData가 null일 경우 기본값 0 반환
 
   return (
-    <>
     <Suspense>
+    <>
       <div className="hidden flex-col md:flex">
         <div className="flex-1 space-y-4 p-8 pt-6">
           <div className="flex items-center justify-between space-y-2">
@@ -261,7 +261,7 @@ useEffect(() => {
           </Tabs>
         </div>
       </div>
-      </Suspense>
     </>
+    </Suspense>
   )
 }

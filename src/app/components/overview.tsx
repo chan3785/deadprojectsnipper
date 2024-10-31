@@ -99,8 +99,8 @@ export function Overview() {
     { month: activityData?.activity_data_list[0].record_date, github: activityData?.score_overview.github.score, twitter: activityData?.score_overview.twitter.score, near: activityData?.score_overview.near.score },
   ]
   return (
+    <Suspense>
     <ResponsiveContainer width="100%" height={250}>
-      <Suspense>
       <ChartContainer config={chartConfig}>
           <BarChart accessibilityLayer data={chartData}>
             <CartesianGrid vertical={false} />
@@ -120,7 +120,7 @@ export function Overview() {
             <Bar dataKey="near" fill="var(--color-near)" radius={4} />
           </BarChart>
         </ChartContainer>  
-        </Suspense>
     </ResponsiveContainer>
+    </Suspense>
   )
 }

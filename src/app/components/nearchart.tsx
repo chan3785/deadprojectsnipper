@@ -94,7 +94,7 @@ export function NearChart() {
   ]
   return (
     <Suspense>
-    <ResponsiveContainer width="100%" height={250}>
+     <ResponsiveContainer width="100%" height={250}>
         <ChartContainer config={chartConfig}>
         <LineChart
             accessibilityLayer
@@ -126,7 +126,7 @@ export function NearChart() {
             />
           </LineChart>
         </ChartContainer>
-    </ResponsiveContainer>
+     </ResponsiveContainer>
     </Suspense>
   )
 }
