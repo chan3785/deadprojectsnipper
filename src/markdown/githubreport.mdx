@@ -4,7 +4,6 @@ import Markdown from 'react-markdown';
 export default function MyMDXFile({ apiData }) {
   return (
     <div>
-      <h3>Github Report</h3>
       {apiData ? (
         <Markdown>{apiData}</Markdown> 
       ) : (

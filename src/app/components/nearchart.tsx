@@ -1,7 +1,7 @@
 "use client"
 
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, XAxis } from "recharts"
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import axios from 'axios';
 import {
   ChartConfig,
@@ -93,6 +93,7 @@ export function NearChart() {
     { month: activityData?.activity_data_list[0]?.record_date, transactions: activityData?.activity_data_list[0]?.near_transactions.count },
   ]
   return (
+    <Suspense>
     <ResponsiveContainer width="100%" height={250}>
         <ChartContainer config={chartConfig}>
         <LineChart
@@ -126,5 +127,6 @@ export function NearChart() {
           </LineChart>
         </ChartContainer>
     </ResponsiveContainer>
+    </Suspense>
   )
 }

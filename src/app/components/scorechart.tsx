@@ -10,7 +10,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import axios from 'axios';
 import { useSearchParams } from "next/navigation";
 
@@ -95,6 +95,7 @@ export function ScoreChart() {
   ]
   return (
     <ResponsiveContainer width="100%" height={250}>
+      <Suspense>
       <ChartContainer config={chartConfig}>
           <LineChart
             accessibilityLayer
@@ -126,6 +127,7 @@ export function ScoreChart() {
             />
           </LineChart>
         </ChartContainer>
+        </Suspense>
     </ResponsiveContainer>
   )
 }

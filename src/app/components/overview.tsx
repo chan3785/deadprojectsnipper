@@ -2,7 +2,7 @@
 
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import {  Bar, BarChart, CartesianGrid, ResponsiveContainer, XAxis } from "recharts"
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import axios from 'axios';
 import { useSearchParams } from "next/navigation";
 
@@ -100,7 +100,7 @@ export function Overview() {
   ]
   return (
     <ResponsiveContainer width="100%" height={250}>
-      
+      <Suspense>
       <ChartContainer config={chartConfig}>
           <BarChart accessibilityLayer data={chartData}>
             <CartesianGrid vertical={false} />
@@ -120,6 +120,7 @@ export function Overview() {
             <Bar dataKey="near" fill="var(--color-near)" radius={4} />
           </BarChart>
         </ChartContainer>  
+        </Suspense>
     </ResponsiveContainer>
   )
 }

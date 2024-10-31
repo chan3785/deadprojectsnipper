@@ -17,7 +17,7 @@ import { NearChart } from "./components/nearchart"
 import GithubReport from '@/markdown/githubreport.mdx'
 import TwitterReport from '@/markdown/twitterreport.mdx'
 import NearReport from '@/markdown/nearreport.mdx'
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import axios from 'axios';
 import { useSearchParams } from "next/navigation"
 import { MDXProvider } from '@mdx-js/react';
@@ -115,6 +115,7 @@ useEffect(() => {
 
   return (
     <>
+    <Suspense>
       <div className="hidden flex-col md:flex">
         <div className="flex-1 space-y-4 p-8 pt-6">
           <div className="flex items-center justify-between space-y-2">
@@ -225,7 +226,7 @@ useEffect(() => {
                 </div>
                 <div className="col-span-3">
                 <Card className=" h-[340px]">
-                <CardHeader className=" p-3">
+                <CardHeader>
                 <CardTitle>Github Report</CardTitle>
                   </CardHeader>
                     <CardContent>
@@ -235,7 +236,7 @@ useEffect(() => {
                     </CardContent>
                 </Card>
                 <Card className=" h-[340px]">
-                <CardHeader className=" p-3">
+                <CardHeader>
                 <CardTitle>Twitter Report</CardTitle>
                   </CardHeader>
                     <CardContent>
@@ -245,7 +246,7 @@ useEffect(() => {
                     </CardContent>
                 </Card>
                 <Card className=" h-[340px]">
-                <CardHeader className=" p-3">
+                <CardHeader>
                 <CardTitle>NEAR Report</CardTitle>
                   </CardHeader>
                     <CardContent>
@@ -260,6 +261,7 @@ useEffect(() => {
           </Tabs>
         </div>
       </div>
+      </Suspense>
     </>
   )
 }

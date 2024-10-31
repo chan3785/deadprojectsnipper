@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/chart"
 
 import axios from 'axios';
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 interface ActivityData {
@@ -131,6 +131,7 @@ export function GithubChart() {
   ]
 
   return (
+    <Suspense>
     <ResponsiveContainer width="100%" height={250}>
         <ChartContainer config={chartConfig}>
           <BarChart accessibilityLayer data={commitchartData}>
@@ -194,5 +195,6 @@ export function GithubChart() {
           </BarChart>
         </ChartContainer>
     </ResponsiveContainer>
+    </Suspense>
   )
 }

@@ -10,7 +10,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import axios from 'axios';
 import { useSearchParams } from "next/navigation";
 export const description = "A stacked bar chart with a legend"
@@ -110,6 +110,7 @@ export function TwitterChart() {
     { month: activityData?.activity_data_list[0].record_date, tweets: activityData?.activity_data_list[0].twitter.count, likes: activityData?.activity_data_list[0].twitter.like_per_tweet, reply: activityData?.activity_data_list[0].twitter.reply_per_tweet, retweets: activityData?.activity_data_list[0].twitter.retweet_per_tweet, followers: activityData?.activity_data_list[0].twitter.followers },
   ]
   return (
+    <Suspense>
     <ResponsiveContainer width="100%" height={250}>
         <ChartContainer config={chartConfig}>
           <BarChart accessibilityLayer data={chartdata}>
@@ -154,5 +155,6 @@ export function TwitterChart() {
           </BarChart>
         </ChartContainer>
     </ResponsiveContainer>
+    </Suspense>
   )
 }
