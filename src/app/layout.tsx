@@ -28,11 +28,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    <Suspense fallback={<div>Loading...</div>}>
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Suspense fallback={<div>Loading...</div>}>
         <div className="hidden flex-col md:flex">
         <div className="border-b">
           <div className="flex h-16 items-center px-4">
@@ -45,8 +45,8 @@ export default function RootLayout({
         </div>
         </div>
         {children}
-        </Suspense>
       </body>
     </html>
+    </Suspense>
   );
 }
